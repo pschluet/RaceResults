@@ -10,7 +10,7 @@ def parse_dates(x):
     return dt.datetime.strptime(x, '%M:%S') if len(x) <= 5 else dt.datetime.strptime(x, '%H:%M:%S')
 
 def tick_formatter(x,pos):
-    d = dt.timedelta(seconds=x)
+    d = dt.timedelta(seconds=float(x))
     return str(d)
 
 if __name__ == "__main__":
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     me = df[df['Name'] == 'Paul Schlueter']
     me = me.to_dict(orient='records')[0]
 
-    plt.figure()
+    fig = plt.figure(figsize=[12,9])
     plt.subplot(321)
     ax = sns.distplot(df['Swim'], kde_kws={"shade": True}, hist=False, color='green')
     plt.plot([me['Swim']] * 2, [0, ax.get_ylim()[1]], color='black')
@@ -52,4 +52,24 @@ if __name__ == "__main__":
     ax.xaxis.set_major_formatter(formatter)
 
     plt.tight_layout()
+
+    plt.figure()
+    ax = sns.boxplot(x='Time', y='Div', data=df)
+    ax.grid(axis='y')
+    sns.swarmplot(x='Time', y='Div', data=df, size=2, color=".3", linewidth=0)
+    plt.title('Total Time by Division')
+    plt.xlabel('Total Time')
+    ax.xaxis.set_major_formatter(formatter)
+
+    df['Sex'] = df['Div'].map(lambda x: 'F' in x or 'ATH' in x)
+
+    plt.figure(figsize=[10,6])
+    ax = sns.distplot(df.loc[df['Sex'] == 1, 'Time'], kde_kws={"shade": True}, hist=False)
+    ax = sns.distplot(df.loc[df['Sex'] == 0, 'Time'], kde_kws={"shade": True}, hist=False)
+    plt.legend(['Women', 'Men'])
+    plt.plot([me['Time']] * 2, [0, ax.get_ylim()[1]], color='black')
+    plt.title('Total Time PDFs')
+    plt.xlabel('Total Time')
+    ax.xaxis.set_major_formatter(formatter)
+
     plt.show()
