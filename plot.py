@@ -72,4 +72,10 @@ if __name__ == "__main__":
     plt.xlabel('Total Time')
     ax.xaxis.set_major_formatter(formatter)
 
+    plt.figure()
+    ax = sns.barplot(x='counts', y='Div', data=df.groupby(['Div']).size().reset_index(name='counts').sort_values('counts', ascending=False))
+    plt.xlabel('Number of Competitors')
+    plt.ylabel('Division')
+    plt.title('Number of Competitors by Division')
+
     plt.show()
