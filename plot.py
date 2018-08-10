@@ -19,6 +19,8 @@ if __name__ == "__main__":
     for col in time_cols:
         df[col] = df[col].apply(lambda x: (x - dt.datetime.strptime('0', '%S')).total_seconds())
 
+    sns.set_style('darkgrid')
+
     formatter = matplotlib.ticker.FuncFormatter(tick_formatter)
 
     me = df[df['Name'] == 'Paul Schlueter']
@@ -55,7 +57,6 @@ if __name__ == "__main__":
 
     plt.figure()
     ax = sns.boxplot(x='Time', y='Div', data=df)
-    ax.grid(axis='y')
     sns.swarmplot(x='Time', y='Div', data=df, size=2, color=".3", linewidth=0)
     plt.title('Total Time by Division')
     plt.xlabel('Total Time')
