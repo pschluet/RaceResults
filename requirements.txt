@@ -3,7 +3,7 @@ bs4==0.0.1
 cycler==0.10.0
 html5lib==1.0.1
 kiwisolver==1.0.1
-lxml==4.2.4
+lxml==4.9.1
 matplotlib==2.2.2
 numpy==1.15.0
 pandas==0.23.4
